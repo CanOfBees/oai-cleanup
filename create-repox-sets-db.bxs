@@ -1,5 +1,4 @@
-<!-- create a 'repox-sets' database -->
-
 <commands>
   <create-db name="repox-sets"/>
+  <run file="add-repox-sets.xq"/>
 </commands>
