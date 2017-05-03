@@ -1,4 +1,22 @@
+<!--  
+  sets up the initial framework for processing OAI-PMH from repox.
+  NOTE: these commands aren't destructive, particularly the `run` commands; you
+  can (and will) add multiple copies of the same feed to a database if you
+  aren't careful.
+-->
+
 <commands>
+  <!-- creates a basex db named 'repox-sets' -->
   <create-db name="repox-sets"/>
+
+  <!-- 
+    `run` an xquery script that adds set-level info to the `repox-sets` database
+  -->
   <run file="add-repox-sets.xq"/>
+  
+  <!-- 
+    `run` an xquery script that creates a basex db for each of the named 
+    sets
+  -->
+  <run file="create-db-for-each-set.xq"/>
 </commands>
