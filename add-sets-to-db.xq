@@ -32,7 +32,7 @@ declare function local:resume($base-url as xs:string, $token as xs:string) as do
             local:resume($base-url, $new-token))
 };
 
-for $set in db:open('repox-sets')/set/spec/text()
+for $set in db:open('repox-sets')/set/spec/text()[fn:not(fn:starts-with(., 'utk_'))]
 let $base-url := "http://dpla.lib.utk.edu/repox/OAIHandler" (: UTK's REPOX install :)
 let $verb := "?verb=ListRecords&amp;metadataPrefix=oai_dc"
 let $set-spec := "&amp;set=" || $set 
@@ -41,4 +41,14 @@ for $record in $response//oai:record
 let $id := $record/oai:header/oai:identifier/text()
 return(
   db:add(($set), $record, $id, map { 'addcache': true() } )
+), 
+for $set in db:open('repox-sets')/set/spec/text()[fn:starts-with(., 'utk_')]
+let $base-url := "http://dpla.lib.utk.edu/repox/OAIHandler"
+let $verb := "?verb=ListRecords&amp;metadataPrefix=mods"
+let $set-spec := "&amp;set=" || $set
+let $response := local:request($base-url, $verb, $set-spec)
+for $record in $response//oai:record
+let $id := $record/oai:header/oai:identifier/text()
+return(
+  db:add(($set), $record, $id, map { 'addcache': true() })
 )

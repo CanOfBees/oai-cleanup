@@ -19,4 +19,9 @@
     sets
   -->
   <run file="create-db-for-each-set.xq"/>
+  
+  <!-- 
+    `run` an xquery script that adds <record>s to each set database
+  -->
+  <run file="add-sets-to-db.xq"/>
 </commands>
