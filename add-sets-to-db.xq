@@ -40,7 +40,8 @@ let $response := local:request($base-url, $verb, $set-spec)
 for $record in $response//oai:record
 let $id := $record/oai:header/oai:identifier/text()
 return(
-  db:add(($set), $record, $id, map { 'addcache': true() } )
+  db:add(($set), $record, $id, map { 'addcache': true() } ),
+  db:optimize(($set), true())
 ), 
 for $set in db:open('repox-sets')/set/spec/text()[fn:starts-with(., 'utk_')]
 let $base-url := "http://dpla.lib.utk.edu/repox/OAIHandler"
@@ -50,5 +51,6 @@ let $response := local:request($base-url, $verb, $set-spec)
 for $record in $response//oai:record
 let $id := $record/oai:header/oai:identifier/text()
 return(
-  db:add(($set), $record, $id, map { 'addcache': true() })
+  db:add(($set), $record, $id, map { 'addcache': true() }),
+  db:optimize(($set), true())
 )
