@@ -37,6 +37,7 @@ let $response := local:request($base-url, $verb, $set-spec)
 for $record in $response//oai:record
 let $id := $record/oai:header/oai:identifier/text()
 return(
-  db:add('country_music_qdc', $record, $id, map { 'addcache': true() }),
-  db:optimize('country_music_qdc', true())
+  (: db:replace('cmhf', $record, $id, map { 'addcache': true() }) :)
+  db:add('cmhf-another-test', $record, $id, map { 'addcache': true() }),
+  db:optimize('cmhf-another-test', true())
 )
