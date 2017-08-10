@@ -10,6 +10,7 @@ let $path := $target || $file || '.xml'(: db:path($record) :)
 return (
   (: file:create-dir(file:parent($path)),
   file:write($path, $record) :)
-  file:create-dir(file:parent($path)),
-  file:write($path, $record)
+  (:file:create-dir(file:parent($path)),
+  file:write($path, $record):)
+  $path
 )
